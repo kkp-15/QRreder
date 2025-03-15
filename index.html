@@ -26,10 +26,7 @@
 
     <script>
         function onScanSuccess(decodedText) {
-            // 効果音を再生
-            document.getElementById('beep').play();
-            
-            // 結果を表示（URLならリンク化）
+            document.getElementById('beep').play(); // 効果音
             document.getElementById('result').innerHTML = 
                 `<a href="${decodedText}" target="_blank">${decodedText}</a>`;
         }
