@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRコードリーダー</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        #reader {
+            width: 300px;
+            margin: auto;
+        }
+        #result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">QRコードリーダー</h1>
+    <div id="reader"></div>
+    <p id="result"></p>
+    
+    <audio id="beep" src="beep.mp3"></audio> <!-- 効果音 -->
+
+    <script>
+        function onScanSuccess(decodedText) {
+            // 効果音を再生
+            document.getElementById('beep').play();
+            
+            // 結果を表示（URLならリンク化）
+            document.getElementById('result').innerHTML = 
+                `<a href="${decodedText}" target="_blank">${decodedText}</a>`;
+        }
+
+        function onScanFailure(error) {
+            console.warn(`QRコード読み取り失敗: ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner("reader", {
+            fps: 10,
+            qrbox: 250
+        });
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+</body>
+</html>
